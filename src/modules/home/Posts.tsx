@@ -5,10 +5,11 @@ import {BlogPostsContext, iBlogPostContext} from "./BlogPostsContext";
 
 const Posts = () => {
   const {blogPosts} = useContext<iBlogPostContext>(BlogPostsContext);
-
   const [query] = useSearchParams()
 
-  let filteredPosts: BlogPostProps[] | null = blogPosts;
+  console.log(blogPosts)
+
+  let filteredPosts: BlogPostProps[] | [] = [...blogPosts];
 
   if(query.has('sort')){
     filteredPosts = blogPosts.filter(post => {

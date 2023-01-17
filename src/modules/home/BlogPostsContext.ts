@@ -8,5 +8,5 @@ export interface iBlogPostContext {
 
 export const BlogPostsContext = createContext<iBlogPostContext>({
   blogPosts: [],
-  setBlogPosts: () => {},
+  setBlogPosts: () => {}
 });

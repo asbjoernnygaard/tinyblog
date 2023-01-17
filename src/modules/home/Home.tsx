@@ -1,10 +1,10 @@
 import React, {useEffect, useState, createContext} from 'react';
 import {BlogPostProps} from "./blogpost/BlogPost";
 import Posts from "./Posts";
+import {BlogPostsContext} from "./BlogPostsContext";
 
 function Home() {
-  const PostsContext = createContext<BlogPostProps[] | null>(null)
-  const [blogPosts, setBlogPosts] = useState<BlogPostProps[] | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPostProps[] | []>([]);
 
   useEffect(() => {
     fetch('https://dummyjson.com/posts')
@@ -17,9 +17,9 @@ function Home() {
         <header className="App-header">
           <h1>Welcome to the blog</h1>
         </header>
-        <PostsContext.Provider value={blogPosts}>
+        <BlogPostsContext.Provider value={{blogPosts, setBlogPosts}}>
           <Posts />
-        </PostsContext.Provider>
+        </BlogPostsContext.Provider>
       </div>
   );
 }
