@@ -1,10 +1,16 @@
 import React from 'react';
 import {createSearchParams, useNavigate} from "react-router-dom";
 
-const FilterButton = ({ tag }: { tag: string }) => {
+interface buttonProps {
+  filter: string
+  value: string
+  text?: string
+}
+
+const FilterButton = ({filter, value, text}: buttonProps) => {
 
   const navigate = useNavigate();
-  const params = { sort: tag};
+  const params = {[filter]: value}
 
   const goToPosts = () =>
       navigate({
@@ -13,7 +19,7 @@ const FilterButton = ({ tag }: { tag: string }) => {
       });
 
   return (
-      <button onClick={goToPosts}>{tag}</button>
+      <button onClick={goToPosts}>{text || value}</button>
   );
 };
 

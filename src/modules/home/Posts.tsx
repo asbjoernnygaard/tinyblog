@@ -7,25 +7,34 @@ const Posts = () => {
   const {blogPosts} = useContext<iBlogPostContext>(BlogPostsContext);
   const [query] = useSearchParams()
 
-  console.log(blogPosts)
+  let filteredPosts = [...blogPosts];
 
-  let filteredPosts: BlogPostProps[] | [] = [...blogPosts];
-
-  if(query.has('sort')){
+  if(query.has('tag')){
     filteredPosts = blogPosts.filter(post => {
-      // Typescript requires default value '' despite already checking with query.has()
-      return post.tags.includes(query.get('sort') || '')
+      return post.tags.includes(query.get('tag') || '')
     })
-  } else {
+  }
 
+  if(query.has('user')){
+    filteredPosts = blogPosts.filter(post => {
+      return post.userId.toString() === (query.get('user'))
+    })
+  }
+
+  if(!filteredPosts.length){
+    return (
+        <main>
+          No content matches set filters.
+        </main>)
   }
 
   return (
           <main>
-            {blogPosts?.map(post => {
+            {filteredPosts.map(post => {
               return <BlogPost key={post.id} {...post}/>
             })}
           </main>
       )
 }
+
 export default Posts;
