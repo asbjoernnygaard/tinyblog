@@ -22,7 +22,7 @@ const BlogPost = ({id, title, body, userId, tags, reactions}: BlogPostProps) => 
             <a>{title}</a>
           </h2>
           <div>
-            <img src={'https://thispersondoesnotexist.com/image'} alt={'author'}/>
+            <img src={'https://thispersondoesnotexist.com/image'} width={100} alt={'author'}/>
             {/* TODO: Add href two lines below; links to a list of all posts by this user
             eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <address className={'author'}>

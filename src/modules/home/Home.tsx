@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import BlogPost, {BlogPostProps} from "./blogpost/BlogPost";
-import {useSearchParams} from "react-router-dom";
-import getCommonTags from "./getCommonTags";
+import React, {useEffect, useState, createContext} from 'react';
+import {BlogPostProps} from "./blogpost/BlogPost";
+import Posts from "./Posts";
 
 function Home() {
-
+  const PostsContext = createContext<BlogPostProps[] | null>(null)
   const [blogPosts, setBlogPosts] = useState<BlogPostProps[] | null>(null);
-  const [query] = useSearchParams()
 
   useEffect(() => {
     fetch('https://dummyjson.com/posts')
@@ -14,25 +12,14 @@ function Home() {
         .then(res => setBlogPosts(res.posts))
   }, [])
 
-  console.log(query)
-
-  const filteredBlogPosts = blogPosts?.filter(post => {
-    const queryTag = query.get('sort') || ''
-    return post.tags.includes(queryTag)
-  })
-
-  // const frequentTags: string[] = getCommonTags(blogPosts);
-
   return (
       <div className="App">
         <header className="App-header">
           <h1>Welcome to the blog</h1>
         </header>
-        <main>
-          {filteredBlogPosts?.map(post => {
-            return <BlogPost key={post.id} {...post}/>
-          })}
-        </main>
+        <PostsContext.Provider value={blogPosts}>
+          <Posts />
+        </PostsContext.Provider>
       </div>
   );
 }
