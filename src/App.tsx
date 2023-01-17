@@ -1,27 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import BlogPost from "./modules/common/BlogPost";
+import React from 'react';
+import Home from "./modules/home/Home";
+
+import {
+  BrowserRouter as Router, Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 function App() {
-
-  const [blogPosts, setBlogPosts] = useState(null);
-
-  useEffect(() => {
-    fetch('https://dummyjson.com/posts')
-        .then(res => res.json())
-        .then(res => setBlogPosts(res.posts))
-  }, [])
-
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <main>
-        {blogPosts?.map(post => {
-
-        })}
-      </main>
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/Home" element={<Home />}/>
+          <Route path="/" element={<Navigate to="/Home" />}/>
+        </Routes>
+      </Router>
   );
 }
 
